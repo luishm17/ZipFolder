@@ -12,7 +12,7 @@ import java.util.zip.ZipOutputStream;
 public class ZipFolder {
 //	private static final String OUTPUT_SOURCE_FOLDER = "G:\\Ao no Exorcist";
 	private static final String ZIP_FORMAT = ".zip";
-	private static final String SOURCE_FOLDER = "G:\\Manga\\Mahou Sensei Negima!"; // SourceFolder path
+	private static final String SOURCE_FOLDER = "G:\\Folder you want to analize"; // SourceFolder path
 	private static final String OUTPUT_SOURCE_FOLDER = SOURCE_FOLDER;
 
 	public ZipFolder() {
