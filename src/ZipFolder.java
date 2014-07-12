@@ -10,56 +10,59 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class ZipFolder {
-//	private static final String OUTPUT_SOURCE_FOLDER = "G:\\Ao no Exorcist";
 	private static final String ZIP_FORMAT = ".zip";
-	private static final String SOURCE_FOLDER = "G:\\Folder you want to analize"; // SourceFolder path
-	private static final String OUTPUT_SOURCE_FOLDER = SOURCE_FOLDER;
+	private static final String tmp = "Fairy Tail";
+	private static final String SOURCE_FOLDER = "G:\\Manga\\" + tmp; // SourceFolder
+																		// path
+	private static final String OUTPUT_SOURCE_FOLDER = "G:\\Manga\\" + tmp;
 
 	public ZipFolder() {
 	}
 
 	public static void main(String[] args) {
 		ZipFolder appZip = new ZipFolder();
-		String[] directories =  appZip.getSubDirectory();
-		
+		String[] directories = appZip.getSubDirectory();
+
 		List<String> fileList;
 		String source;
 		System.out.println("<-------------------------->");
 		System.out.println("<-------------------------->");
 		System.out.println("<-------------------------->");
 		System.out.println("<-------------------------->");
-		System.out.println("There are " + directories.length + " directories that are going to be processed");
+		System.out.println(directories.length
+				+ " Directories are going to be processed");
 		System.out.println("<-------------------------->");
 		System.out.println("<-------------------------->");
 		System.out.println("<-------------------------->");
 		System.out.println("<-------------------------->");
-		
-			Thread thread = new Thread(new Runnable(){
 
-				@Override
-				public void run() {
-					
-					
-				}
-				
-			});
-			
-			try {
-				thread.sleep(1000);
-				thread.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		for(String directory : directories){
+		File output = new File(OUTPUT_SOURCE_FOLDER);
+		if (output.exists() ^ true) {
+			System.out.println("The folder " + OUTPUT_SOURCE_FOLDER
+					+ " was created");
+			output.mkdir();
+		}
+
+		Thread thread = new Thread();
+
+		try {
+			thread.sleep(2000);
+			thread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		for (String directory : directories) {
 			source = SOURCE_FOLDER + File.separator + directory;
 			System.out.println("The source is " + source);
 			fileList = new ArrayList<String>();
 			appZip.generateFileList(new File(source), fileList);
 			System.out.println("Folder size is " + fileList.size());
-			appZip.zipIt(OUTPUT_SOURCE_FOLDER + File.separator +  directory + ZIP_FORMAT, fileList, source);
+			appZip.zipIt(OUTPUT_SOURCE_FOLDER + File.separator + directory
+					+ ZIP_FORMAT, fileList, source);
 		}
-		
+
 		System.out.println("El proceso a terminado");
 	}
 
@@ -68,7 +71,7 @@ public class ZipFolder {
 		FileOutputStream fos = null;
 		ZipOutputStream zos = null;
 		try {
-			
+
 			fos = new FileOutputStream(zipFile);
 			zos = new ZipOutputStream(fos);
 
@@ -76,7 +79,7 @@ public class ZipFolder {
 			FileInputStream in = null;
 
 			for (String file : fileList) {
-//				System.out.println("File Added : " + file);
+				// System.out.println("File Added : " + file);
 				ZipEntry ze = new ZipEntry(file);
 				zos.putNextEntry(ze);
 				try {
@@ -106,11 +109,11 @@ public class ZipFolder {
 	}
 
 	public List<String> generateFileList(File node, List<String> fileList) {
-//		System.out.println("The node is " + node.getName());
-		
+		// System.out.println("The node is " + node.getName());
+
 		// add file only
 		if (node.isFile()) {
-//			System.out.println("File Added");
+			// System.out.println("File Added");
 			fileList.add(generateZipEntry(node.toString()));
 
 		}
@@ -121,16 +124,16 @@ public class ZipFolder {
 				generateFileList(new File(node, filename), fileList);
 			}
 		}
-		
+
 		return fileList;
 	}
 
 	private String generateZipEntry(String file) {
 		return file.substring(SOURCE_FOLDER.length() + 1, file.length());
 	}
-	
+
 	private String[] getSubDirectory() {
-		
+
 		File file = new File(SOURCE_FOLDER);
 		String[] directories = file.list(new FilenameFilter() {
 			@Override
@@ -139,8 +142,8 @@ public class ZipFolder {
 			}
 		});
 		System.out.println(Arrays.toString(directories));
-		
+
 		return directories;
 	}
-	
+
 }
